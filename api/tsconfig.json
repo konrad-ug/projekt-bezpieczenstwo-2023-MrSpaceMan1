@@ -1,0 +1,15 @@
+{
+    "extends": "@tsconfig/node-lts/tsconfig.json",
+    "exclude": [
+        "node_modules"
+    ],
+    "compilerOptions": {
+        "target": "es6",
+        "lib": ["ES2015.Iterable", "ES6"],
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
+        "outDir": "build",
+        "noImplicitAny": true
+    }
+}

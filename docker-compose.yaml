@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  api:
+    build: ./api
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+    environment:
+      - DB_HOST=database
+    ports:
+      - 3000:3000
+  
+  database:
+    image: neo4j:latest
+    environment:
+      - NEO4J_AUTH=none
+    volumes:
+      - type: volume
+        target: /data
+    healthcheck:
+      test: wget http://localhost:7474 || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 0s
+    ports:
+      - 7474:7474
+      - 7687:7687
