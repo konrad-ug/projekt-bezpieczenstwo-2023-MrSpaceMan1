@@ -1,3 +1,6 @@
+import { Request, RequestHandler } from "express";
+import { ParamsDictionary } from "express-serve-static-core";
+
 interface Node {
   identity: {
     low: number;
@@ -68,4 +71,8 @@ export interface OrderModel {
     amount: number;
     id: string;
   }[];
+}
+
+export interface ReqWithToken extends Request {
+  token?: string;
 }
