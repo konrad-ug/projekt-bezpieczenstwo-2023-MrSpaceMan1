@@ -43,7 +43,8 @@ services:
       - NEO4JLABS_PLUGINS=["apoc"]
     restart: always
     volumes:
-      - ./neo4j/:/data
+      - type: volume
+        target: /data
     healthcheck:
       test: wget http://localhost:7474 || exit 1
       interval: 10s
