@@ -12,6 +12,19 @@ Projekt składa się z aplikacji webowej napisanej przy pomocy React, serwisu ap
 
 Część projektu(api) powstała podczas zeszłego semetru i jest wykorzystywana przez prymitywny frontend
 
+Dostęp do keycloak jest pod adressem localhost:8080, login:
+> admin
+
+hasło:
+> admin
+
+Poza tym instnieje jeden user o loginie:
+> panda3
+
+
+i haśle:
+> passwd
+
 ---
 
 W aplikacji webowej zabezpieczone są wszystkie ścieżki poza rootem na którym widnieje przycisk do zalogowania się. Próba wejścia na zabezpieczoną ścieżke kończy się przekierowaniem do logowania w Keycloaku. Aplikacja zabezpieczona jest paczką react-oidc-context która automatycznie odświeża token dzięki czemu nie musimy logować się ponownie. Aby móc wykonywać zapytania do api musimy do każdego zapytania dodać nagłówek Authorization w którym przekazujemy access token uzyskany przy logowaniu(zapenia nam to paczka react-oidc-context).
