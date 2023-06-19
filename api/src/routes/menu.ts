@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addMenuCategory,
   addMenuItem,
   deleteMenuItem,
   editMenuItem,
@@ -7,11 +8,12 @@ import {
   getMenuItem,
 } from "../repository";
 import { Menu, MenuModel } from "../types";
+import protectRoute from "../middlewares/protectRoute";
 
 const menu = Router();
 
 menu
-  .get("/", async (req, res) => {
+  .get("/", protectRoute(), async (req, res) => {
     getMenu()
       .then((success: Menu) => {
         const readable = success.reduce((acc: MenuModel, curr): MenuModel => {
@@ -31,7 +33,7 @@ menu
         console.log(err);
       });
   })
-  .get("/item/:itemId", async (req, res) => {
+  .get("/item/:itemId", protectRoute(), async (req, res) => {
     const { itemId } = req.params;
     getMenuItem(itemId)
       .then((success) => {
@@ -41,7 +43,7 @@ menu
         res.send(err);
       });
   })
-  .put("/item/:itemId", async (req, res) => {
+  .put("/item/:itemId", protectRoute(["Admin"]), async (req, res) => {
     const { itemId } = req.params;
     const { name, price } = req.body;
     editMenuItem(itemId, name, price)
@@ -52,7 +54,7 @@ menu
         res.send(err);
       });
   })
-  .delete("/item/:itemId", async (req, res) => {
+  .delete("/item/:itemId", protectRoute(["Admin"]), async (req, res) => {
     const { itemId } = req.params;
     const item = await getMenuItem(itemId);
     if (!item.at(0)) return res.status(404).send("No item found");
@@ -62,7 +64,7 @@ menu
       });
     });
   })
-  .post("/item", async (req, res) => {
+  .post("/item", protectRoute(["Admin"]), async (req, res) => {
     const { name, price, category } = req.body;
 
     if ([name, price, category].some((v) => !v))
@@ -74,6 +76,17 @@ menu
       })
       .catch((err) => {
         res.send(err);
+      });
+  })
+  .post("/category", protectRoute(["Admin"]), async (req, res) => {
+    const { name } = req.body;
+
+    addMenuCategory(name)
+      .then((success) => {
+        res.send(success);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
       });
   });
 

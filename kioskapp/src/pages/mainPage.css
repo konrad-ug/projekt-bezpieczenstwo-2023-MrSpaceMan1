@@ -1,0 +1,28 @@
+.wrapper-center{
+    margin: 0;
+    padding: 1em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#order_title{
+    font-size: 8em;
+    color: white;
+}
+
+.order_button{
+    font-size: 4em;
+    background-color: var(--complementary);
+    border: none;
+    padding: 0.5em 2em;
+    border-radius: 100vh;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.icon{
+    max-height: 30em;
+}

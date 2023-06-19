@@ -14,6 +14,7 @@ const addMenuItem = async (name: string, price: number, category: string) => {
   RETURN i as item`;
 
   const result = await session.run(query);
+  console.log(result);
 
   return recordToNode(result.records, ["item"]);
 };

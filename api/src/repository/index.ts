@@ -15,6 +15,7 @@ import isOrderEmpty from "./order/isOrderEmpty";
 import deleteMenuItem from "./menu/deleteMenuItem";
 import addMenuItem from "./menu/addMenuItem";
 import getMostCommonItems from "./summary/getMostCommonItems";
+import addMenuCategory from "./menu/addMenuCategory";
 
 export {
   getMenu,
@@ -22,6 +23,7 @@ export {
   editMenuItem,
   deleteMenuItem,
   addMenuItem,
+  addMenuCategory,
   getOrder,
   createOrder,
   deleteOrder,

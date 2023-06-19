@@ -17,13 +17,10 @@ orders
   .post("/", async (req, res) => {
     const { delivery, userId } = req.body;
 
-    if (!["TAKEOUT", "ONPREMISE"].some((v) => v === delivery))
-      return res.status(400).send("Delivery invalid");
     if (!userId) return res.status(400).send("No user");
 
-    createOrder(delivery, userId)
+    createOrder("TAKEOUT", userId)
       .then((success: Partial<OrderNode>[]) => {
-        console.log(success);
         //@ts-ignore
         return res.send({ id: success?.[0]?.order?.order?.properties.id });
       })
@@ -41,7 +38,7 @@ orders
       .then((success) => {
         res.send(success);
       })
-      .catch((err) => res.send(err));
+      .catch((err) => res.status(400).send(err));
   })
   .post("/:orderId/item/:itemId/modify", async (req, res) => {
     const { orderId, itemId } = req.params;
@@ -95,15 +92,13 @@ orders
       });
     });
   })
-  .put("/:orderId//:orderItemId", async (req, res) => {
+  .put("/:orderId/:orderItemId", async (req, res) => {
     const { orderItemId } = req.params;
     const { amount } = req.body;
     if (Number.parseInt(amount) < 0)
       return res.send(400).send("Negative amount");
     updateItem(orderItemId, parseFloat(amount))
       .then((success) => {
-        console.log(success);
-
         res.send(success);
       })
       .catch((err) => res.send(err));
@@ -129,6 +124,8 @@ orders
     finishOrder(orderId)
       .then(async () => {
         const order = await getOrder(orderId);
+        console.log(order);
+
         res.send(order);
       })
       .catch((err) => res.send(err));

@@ -7,10 +7,10 @@ const finishOrder = async (orderId: string) => {
     await session.run(`
   MATCH (o:${ORDER} {id: "${orderId}"}) 
   OPTIONAL MATCH (o)<--(oi:${ORDER_ITEM}) 
-  RETURN NOT toBoolean(size(collect(oi))) as isOrderEmpty
+  RETURN size(collect(oi)) = 0 as isOrderEmpty
   `)
   ).records[0].get("isOrderEmpty");
-  
+
   const query = `MATCH (order:${ORDER} {id: "${orderId}"}) WITH order
   CALL apoc.do.when(order.orderNumber IS NULL, 
   "MERGE (orderNumber:OrderNumber) "+

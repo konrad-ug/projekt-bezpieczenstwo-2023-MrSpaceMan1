@@ -14,8 +14,6 @@ const initializeIdentityProvider = async ({
   client_id,
   client_secret,
 }: InitializeIdentityProviderConfig) => {
-  console.log(well_known_url);
-
   try {
     IdP = await Issuer.discover(well_known_url);
     IdPClient = new IdP.Client({

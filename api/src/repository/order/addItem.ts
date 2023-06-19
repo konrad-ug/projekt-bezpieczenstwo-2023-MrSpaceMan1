@@ -6,7 +6,7 @@ const addItem = async (id: string, itemId: string, amount: number) => {
   const session = driver.session();
   const itemExists = (
     await session.run(`
-  MATCH (o:${ORDER} {id: "${id}"})<--(oi:${ORDER_ITEM})<--(i:${ITEM} {id: "${itemId}"}) RETURN toBoolean(count(oi)) as itemExists`)
+  MATCH (o:${ORDER} {id: "${id}"})<--(oi:${ORDER_ITEM})<--(i:${ITEM} {id: "${itemId}"}) RETURN count(oi) > 0 as itemExists`)
   ).records[0].get("itemExists");
 
   let result;
@@ -24,6 +24,7 @@ const addItem = async (id: string, itemId: string, amount: number) => {
     (order)<-[:${IN}]-(orderItem)<-[:${IS}]-(item)
     RETURN *`);
   }
+
 
   return recordToNode(result.records, ["orderItem", "item"]);
 };

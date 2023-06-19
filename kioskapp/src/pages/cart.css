@@ -1,0 +1,23 @@
+.complementary{
+    background-color: var(--complementary);
+}
+
+.full-width{
+    width: 100%;
+}
+
+.half-width{
+    width: 50%;
+}
+
+.white{
+    background-color: white;
+}
+
+#cart{
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 100%;
+    justify-items: center;
+    height: 100%;
+}
